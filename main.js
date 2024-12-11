@@ -30,20 +30,26 @@ document.getElementById("reason-fields").addEventListener("click", function (e) 
     }
 });
 
+document.querySelectorAll("#timeframe, #currency").forEach(select => {
+    select.addEventListener("change", function (e) {
+        const otherInput = document.getElementById(`${e.target.id}-other`);
+        if (e.target.value === "other") {
+            otherInput.style.display = "block";
+        } else {
+            otherInput.style.display = "none";
+            otherInput.value = "";
+        }
+    });
+});
+
 document.getElementById("generate-output").addEventListener("click", function () {
     const output = document.getElementById("output");
 
     // Collect data from the form
-    const timeframe = document.getElementById("timeframe").value;
-    const currencies = Array.from(document.querySelectorAll("input[name='currency']:checked"))
-        .map(input => input.nextSibling.nodeValue.trim())
-        .join(", ");
-    const tradeType = Array.from(document.querySelectorAll("input[name='trade_type']:checked"))
-        .map(input => input.nextSibling.nodeValue.trim())
-        .join(", ");
-    const tradeResult = Array.from(document.querySelectorAll("input[name='trade_result']:checked"))
-        .map(input => input.nextSibling.nodeValue.trim())
-        .join(", ");
+    const timeframe = document.getElementById("timeframe").value === "other" ? document.getElementById("timeframe-other").value : document.getElementById("timeframe").value;
+    const currency = document.getElementById("currency").value === "other" ? document.getElementById("currency-other").value : document.getElementById("currency").value;
+    const tradeType = document.getElementById("trade-type").value;
+    const tradeResult = document.getElementById("trade-result").value;
     const feedback = document.getElementById("feedback").value;
 
     const reasons = Array.from(document.querySelectorAll("#reason-fields .reason"))
@@ -55,5 +61,5 @@ document.getElementById("generate-output").addEventListener("click", function ()
         .join("\n");
 
     // Output the formatted result
-    output.textContent = `出力日時: ${new Date().toLocaleString()}\n結果: ${tradeResult}\n\n【エントリー基本情報】\n・通貨ペア: ${currencies}\n・エントリー種別: ${tradeType}\n・メイン時間足: ${timeframe}\n\n【使った根拠・分析】\n${reasons}\n\n【見解・感想】\n${feedback}`;
+    output.textContent = `出力日時: ${new Date().toLocaleString()}\n結果: ${tradeResult}\n\n【エントリー基本情報】\n・通貨ペア: ${currency}\n・エントリー種別: ${tradeType}\n・メイン時間足: ${timeframe}\n\n【使った根拠・分析】\n${reasons}\n\n【見解・感想】\n${feedback}`;
 });
