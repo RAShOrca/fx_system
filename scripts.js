@@ -49,19 +49,42 @@ document.querySelectorAll("#timeframe, #currency").forEach(select => {
 document.getElementById("generate-output").addEventListener("click", function () {
     const output = document.getElementById("output");
 
+    // 値のマッピング（変換）
+    const tradeResultMap = { win: "勝ち", lose: "負け" };
+    const currencyMap = { usd_jpy: "ドル円", nikkei: "日経" };
+    const tradeTypeMap = { buy: "買い", sell: "売り" };
+    const reasonMap = {
+        uptrend: "ダウ（上昇）",
+        downtrend: "ダウ（下降）",
+        range: "ダウ（もみ合い）",
+        fibonacci: "フィボナッチ",
+        elliott: "エリオット波動",
+        "line-analysis": "ライン分析",
+        "chart-pattern": "チャートパターン",
+        ma: "MA",
+        bb: "ボリンジャーバンド",
+        ichimoku: "一目均衡表",
+        candlestick: "ローソク足",
+        oscillators: "オシレーター系",
+        other: "その他",
+    };
+
+    // 入力データを取得
     const timeframe = document.getElementById("timeframe").value === "other" ? document.getElementById("timeframe-other").value : document.getElementById("timeframe").value;
-    const currency = document.getElementById("currency").value === "other" ? document.getElementById("currency-other").value : document.getElementById("currency").value;
-    const tradeType = document.getElementById("trade-type").value;
-    const tradeResult = document.getElementById("trade-result").value;
+    const currency = document.getElementById("currency").value === "other" ? document.getElementById("currency-other").value : currencyMap[document.getElementById("currency").value] || document.getElementById("currency").value;
+    const tradeType = tradeTypeMap[document.getElementById("trade-type").value];
+    const tradeResult = tradeResultMap[document.getElementById("trade-result").value];
     const feedback = document.getElementById("feedback").value;
 
     const reasons = Array.from(document.querySelectorAll("#reason-fields .reason"))
         .map(reason => {
-            const select = reason.querySelector("select").value;
+            const selectValue = reason.querySelector("select").value;
+            const reasonName = reasonMap[selectValue] || selectValue;
             const textarea = reason.querySelector("textarea").value;
-            return `・${select}: ${textarea}`;
+            return `・${reasonName}:\n　${textarea}`;
         })
         .join("\n");
 
+    // 出力フォーマットに合わせて整形
     output.textContent = `出力日時: ${new Date().toLocaleString()}\n結果: ${tradeResult}\n\n【エントリー基本情報】\n・通貨ペア: ${currency}\n・エントリー種別: ${tradeType}\n・メイン時間足: ${timeframe}\n\n【使った根拠・分析】\n${reasons}\n\n【見解・感想】\n${feedback}`;
 });
