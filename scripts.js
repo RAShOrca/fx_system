@@ -32,12 +32,17 @@ document.getElementById("reason-fields").addEventListener("click", function (e) 
 
 document.querySelectorAll("#timeframe, #currency").forEach(select => {
     select.addEventListener("change", function (e) {
-        const otherInput = document.getElementById(`${e.target.id}-other`);
-        if (e.target.value === "other") {
-            otherInput.style.display = "block";
-        } else {
-            otherInput.style.display = "none";
-            otherInput.value = "";
+        const otherInputId = `${e.target.id}-other`;
+        const otherInput = document.getElementById(otherInputId);
+
+        // Nullチェックで要素が存在する場合のみ操作
+        if (otherInput) {
+            if (e.target.value === "other") {
+                otherInput.style.display = "block";
+            } else {
+                otherInput.style.display = "none";
+                otherInput.value = ""; // 値をリセット
+            }
         }
     });
 });
