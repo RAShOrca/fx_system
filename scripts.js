@@ -35,13 +35,12 @@ document.querySelectorAll("#timeframe, #currency").forEach(select => {
         const otherInputId = `${e.target.id}-other`;
         const otherInput = document.getElementById(otherInputId);
 
-        // Nullチェックで要素が存在する場合のみ操作
         if (otherInput) {
             if (e.target.value === "other") {
                 otherInput.style.display = "block";
             } else {
                 otherInput.style.display = "none";
-                otherInput.value = ""; // 値をリセット
+                otherInput.value = "";
             }
         }
     });
@@ -50,7 +49,6 @@ document.querySelectorAll("#timeframe, #currency").forEach(select => {
 document.getElementById("generate-output").addEventListener("click", function () {
     const output = document.getElementById("output");
 
-    // Collect data from the form
     const timeframe = document.getElementById("timeframe").value === "other" ? document.getElementById("timeframe-other").value : document.getElementById("timeframe").value;
     const currency = document.getElementById("currency").value === "other" ? document.getElementById("currency-other").value : document.getElementById("currency").value;
     const tradeType = document.getElementById("trade-type").value;
@@ -65,6 +63,5 @@ document.getElementById("generate-output").addEventListener("click", function ()
         })
         .join("\n");
 
-    // Output the formatted result
     output.textContent = `出力日時: ${new Date().toLocaleString()}\n結果: ${tradeResult}\n\n【エントリー基本情報】\n・通貨ペア: ${currency}\n・エントリー種別: ${tradeType}\n・メイン時間足: ${timeframe}\n\n【使った根拠・分析】\n${reasons}\n\n【見解・感想】\n${feedback}`;
 });
