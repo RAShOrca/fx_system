@@ -23,11 +23,16 @@
                 <option value="D1">D1</option>
                 <option value="other">その他</option>
             </select>
+            <input type="text" id="timeframe-other" placeholder="その他の時間足を入力" style="display: none;">
+            
+            <label for="currency">通貨ペア:</label>
+            <select id="currency">
+                <option value="usd_jpy">ドル円</option>
+                <option value="nikkei">日経</option>
+                <option value="other">その他</option>
+            </select>
+            <input type="text" id="currency-other" placeholder="その他の通貨ペアを入力" style="display: none;">
 
-            <label>通貨ペア:</label>
-            <input type="checkbox" name="currency" value="usd_jpy">ドル円
-            <input type="checkbox" name="currency" value="nikkei">日経
-            <input type="checkbox" name="currency" value="other">その他
 
             <label>買いor売り:</label>
             <input type="checkbox" name="trade_type" value="buy">買い
