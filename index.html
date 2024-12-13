@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運用ノートシステム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>運用ノートシステム</h1>
+    </header>
+    <main>
+        <section id="entry-basic-info">
+            <h2>エントリー基本情報</h2>
+            <label for="timeframe">メイン時間足:</label>
+            <select id="timeframe">
+                <option value="M5">M5</option>
+                <option value="M15">M15</option>
+                <option value="M30">M30</option>
+                <option value="H1">H1</option>
+                <option value="H4">H4</option>
+                <option value="D1">D1</option>
+                <option value="other">その他</option>
+            </select>
+            <input type="text" id="timeframe-other" placeholder="その他の時間足を入力" style="display: none;">
+            
+            <label for="currency">通貨ペア:</label>
+            <select id="currency">
+                <option value="usd_jpy">ドル円</option>
+                <option value="nikkei">日経</option>
+                <option value="other">その他</option>
+            </select>
+            <input type="text" id="currency-other" placeholder="その他の通貨ペアを入力" style="display: none;">
+            
+            <label for="trade-type">買いor売り:</label>
+            <select id="trade-type">
+                <option value="buy">買い</option>
+                <option value="sell">売り</option>
+            </select>
+
+            <label for="trade-result">トレード結果:</label>
+            <select id="trade-result">
+                <option value="win">Win</option>
+                <option value="lose">Lose</option>
+            </select>
+        </section>
+
+        <section id="entry-reason">
+            <h2>エントリー根拠</h2>
+            <div id="reason-fields">
+                <div class="reason">
+                    <label for="reason-1">ダウ:</label>
+                    <select id="reason-1">
+                        <option value="uptrend">上昇</option>
+                        <option value="downtrend">下降</option>
+                        <option value="range">もみ合い</option>
+                    </select>
+                    <textarea placeholder="詳細を入力してください"></textarea>
+                </div>
+            </div>
+            <button id="add-reason">追加</button>
+        </section>
+
+        <section id="entry-price">
+            <h2>エントリー価格</h2>
+            <label for="lot-size">Lot数:</label>
+            <input type="number" id="lot-size" step="0.01">
+
+            <label for="main-price">エントリー価格:</label>
+            <input type="number" id="main-price" step="0.001">
+
+            <label for="tp-price">TP価格<span id="tp-pips"></span>:</label>
+            <input type="number" id="tp-price" step="0.001">
+
+            <label for="sl-price">SL価格<span id="sl-pips"></span>:</label>
+            <input type="number" id="sl-price" step="0.001">
+
+            <p>リスクリワード: <span id="risk-reward"></span></p>
+            
+            <button id="calculate">計算</button>
+        </section>
+
+        <section id="comments">
+            <h2>見解・感想</h2>
+            <textarea id="feedback" placeholder="見解や感想を入力してください"></textarea>
+        </section>
+
+        <button id="generate-output">出力</button>
+        <pre id="output"></pre>
+    </main>
+    <script src="cript.js"></script>
+</body>
+</html>
